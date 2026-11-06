@@ -1,0 +1,22 @@
+{
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "None",
+  "ParticleRotateWithSpawner": true,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 1,
+  "TotalParticles": { "Min": 1, "Max": 1 },
+  "ParticleLifeSpan": { "Min": 60, "Max": 60 },
+  "SpawnBurst": true,
+  "UseEmitDirection": true,
+  "Particle": {
+    "Texture": "Particles/Textures/BetterPickupRange/Ring.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "InitialAnimationFrame": {
+      "Opacity": 0.9,
+      "Rotation": { "X": { "Min": 90, "Max": 90 } },
+      "Scale": { "X": { "Min": 1, "Max": 1 }, "Y": { "Min": 1, "Max": 1 } }
+    },
+    "Animation": { "0": { "Opacity": 0.9 }, "100": { "Opacity": 0.9 } }
+  }
+}

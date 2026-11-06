@@ -1,0 +1,48 @@
+$C = "../Common.ui";
+
+Group {
+  LayoutMode: Top;
+  Group { FlexWeight: 1; }
+  Group {
+    LayoutMode: Center;
+    Anchor: (Height: 196, Bottom: 24);
+    $C.@Panel {
+      Anchor: (Width: 422, Height: 196);
+      LayoutMode: Top;
+      Padding: (Full: 15);
+      Label {
+        Text: "ALCANCE DE COLETA";
+        Anchor: (Height: 23);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e7edf6, HorizontalAlignment: Center);
+      }
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 34, Top: 4);
+        $C.@SmallSecondaryTextButton #Minus { Anchor: (Width: 48, Height: 34); Text: "-"; }
+        Label #Value {
+          FlexWeight: 1;
+          Style: (FontSize: 22, RenderBold: true, TextColor: #7de4d4, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        $C.@SmallSecondaryTextButton #Plus { Anchor: (Width: 48, Height: 34); Text: "+"; }
+      }
+      $C.@Slider #Range {
+        @Anchor = (Height: 26, Top: 6);
+        Min: 7;
+        Max: 32;
+        Value: 7;
+      }
+      Label #Hint {
+        Anchor: (Height: 22, Top: 4, Bottom: 6);
+        Text: "O círculo mostra o alcance selecionado";
+        Style: (FontSize: 13, TextColor: #aab9c8, HorizontalAlignment: Center);
+      }
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 34);
+        $C.@SmallSecondaryTextButton #Reset { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Padrão"; }
+        $C.@SmallSecondaryTextButton #Cancel { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Cancelar"; }
+        $C.@TextButton #Apply { FlexWeight: 1; Anchor: (Height: 32); Text: "Aplicar"; }
+      }
+    }
+  }
+}
