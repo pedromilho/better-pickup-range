@@ -31,11 +31,13 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.TargetUtil;
+import java.util.Map;
 import java.util.Set;
 import org.joml.Vector3d;
 
 final class ExtendedPickupSystem extends DelayedEntitySystem<EntityStore> {
     private final PickupRanges ranges;
+    private final Map<PlayerRef, PickupPreview> previews;
     private final Query<EntityStore> players = Query.and(Player.getComponentType(), PlayerRef.getComponentType(),
         TransformComponent.getComponentType(), Query.not(DeathComponent.getComponentType()),
         Query.not(Spectating.getComponentType()));
@@ -44,9 +46,10 @@ final class ExtendedPickupSystem extends DelayedEntitySystem<EntityStore> {
         Query.not(PreventPickup.getComponentType()), Query.not(PickupItemComponent.getComponentType()),
         Query.not(PropComponent.getComponentType()));
 
-    ExtendedPickupSystem(PickupRanges ranges) {
+    ExtendedPickupSystem(PickupRanges ranges, Map<PlayerRef, PickupPreview> previews) {
         super(0.10f);
         this.ranges = ranges;
+        this.previews = previews;
     }
 
     @Override
@@ -65,10 +68,19 @@ final class ExtendedPickupSystem extends DelayedEntitySystem<EntityStore> {
         var player = chunk.getComponent(index, Player.getComponentType());
         var identity = chunk.getComponent(index, PlayerRef.getComponentType());
         var position = chunk.getComponent(index, TransformComponent.getComponentType()).getPosition();
-        if (player.getPageManager().getCustomPage() instanceof PickupRangePage preview) {
-            preview.draw(position);
-        }
         int steps = ranges.get(identity.getUuid());
+        var world = store.getExternalData().getWorld();
+        var preview = previews.get(identity);
+        if (preview != null) {
+            if (player.getPageManager().getCustomPage() instanceof PickupRangePage page) {
+                preview.draw(position, page.selectedRadius());
+            } else if (preview.keepVisible) {
+                float radius = steps == PickupRanges.DEFAULT
+                    ? world.getGameplayConfig().getItemEntityConfig().getPickupRadius()
+                    : PickupRanges.blocks(steps);
+                preview.draw(position, radius);
+            }
+        }
         if (steps == PickupRanges.DEFAULT) {
             return;
         }
@@ -77,7 +89,6 @@ final class ExtendedPickupSystem extends DelayedEntitySystem<EntityStore> {
         var nearby = SpatialResource.<EntityStore>getThreadLocalReferenceList();
         var spatial = store.getResource(EntityModule.get().getItemSpatialResourceType()).getSpatialStructure();
         spatial.collect(position, radius, nearby);
-        var world = store.getExternalData().getWorld();
         var playerEntity = chunk.getReferenceTo(index);
         for (var ref : nearby) {
             if (!ref.isValid() || !drops.test(store.getArchetype(ref))) {

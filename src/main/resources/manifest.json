@@ -1,7 +1,7 @@
 {
   "Group": "Pedro",
   "Name": "Better Pickup Range",
-  "Version": "0.1.0",
+  "Version": "0.5.0",
   "Description": "Personal pickup range with a live third-person preview.",
   "Authors": [{ "Name": "Pedro" }],
   "Main": "br.pedro.pickuprange.PickupRangePlugin",

@@ -5,13 +5,13 @@ Group {
   Group { FlexWeight: 1; }
   Group {
     LayoutMode: Center;
-    Anchor: (Height: 196, Bottom: 24);
+    Anchor: (Height: 230, Bottom: 24);
     $C.@Panel {
-      Anchor: (Width: 422, Height: 196);
+      Anchor: (Width: 422, Height: 230);
       LayoutMode: Top;
       Padding: (Full: 15);
-      Label {
-        Text: "ALCANCE DE COLETA";
+      Label #Heading {
+        Text: "PICKUP RANGE";
         Anchor: (Height: 23);
         Style: (FontSize: 15, RenderBold: true, TextColor: #e7edf6, HorizontalAlignment: Center);
       }
@@ -33,15 +33,19 @@ Group {
       }
       Label #Hint {
         Anchor: (Height: 22, Top: 4, Bottom: 6);
-        Text: "O círculo mostra o alcance selecionado";
+        Text: "The circle shows the selected range";
         Style: (FontSize: 13, TextColor: #aab9c8, HorizontalAlignment: Center);
+      }
+      $C.@SmallSecondaryTextButton #KeepPreview {
+        Anchor: (Height: 28, Bottom: 6);
+        Text: "Preview outside panel: on";
       }
       Group {
         LayoutMode: Left;
         Anchor: (Height: 34);
-        $C.@SmallSecondaryTextButton #Reset { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Padrão"; }
-        $C.@SmallSecondaryTextButton #Cancel { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Cancelar"; }
-        $C.@TextButton #Apply { FlexWeight: 1; Anchor: (Height: 32); Text: "Aplicar"; }
+        $C.@SmallSecondaryTextButton #Reset { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Default"; }
+        $C.@SmallSecondaryTextButton #Cancel { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Cancel"; }
+        $C.@TextButton #Apply { FlexWeight: 1; Anchor: (Height: 32); Text: "Apply"; }
       }
     }
   }
