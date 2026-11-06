@@ -141,7 +141,7 @@ final class PickupRangePage extends InteractiveCustomUIPage<PickupRangePage.Data
             ? String.format(Locale.forLanguageTag("pt-BR"), "%.2f blocos", selectedRadius())
             : String.format(Locale.ENGLISH, "%.2f blocks", selectedRadius());
         if (steps == PickupRanges.DEFAULT) {
-            label += portuguese ? " · Padrão do jogo" : " · Game default";
+            label += portuguese ? " · Padrão do jogo" : " · Default";
         }
         return label;
     }
