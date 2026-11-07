@@ -7,6 +7,8 @@ $ErrorActionPreference = 'Stop'
 $server = (Resolve-Path -LiteralPath $ServerJar).Path
 $build = Join-Path $PSScriptRoot 'build'
 $resources = Join-Path $PSScriptRoot 'src/main/resources'
+$manifest = Get-Content -LiteralPath (Join-Path $resources 'manifest.json') -Raw | ConvertFrom-Json
+$jarName = "BetterPickupRange-$($manifest.Version).jar"
 $sources = Get-ChildItem (Join-Path $PSScriptRoot 'src/main/java') -Recurse -Filter '*.java'
 $classes = Join-Path $build ([guid]::NewGuid().ToString())
 
@@ -15,11 +17,16 @@ try {
     & javac --release 25 -encoding UTF-8 -cp $server -d $classes $sources.FullName
     if ($LASTEXITCODE -ne 0) { throw 'javac failed' }
 
-    $output = Join-Path $build 'BetterPickupRange.jar'
+    $output = Join-Path $build $jarName
     & jar --create --file $output -C $classes . -C $resources .
     if ($LASTEXITCODE -ne 0) { throw 'jar failed' }
-    $installed = Join-Path (Resolve-Path -LiteralPath $ModsDirectory).Path 'BetterPickupRange.jar'
+    $mods = (Resolve-Path -LiteralPath $ModsDirectory).Path
+    $installed = Join-Path $mods $jarName
     Copy-Item -LiteralPath $output -Destination $installed -Force
+    # Keep only one installed copy of the mod.
+    Get-ChildItem -LiteralPath $mods -File -Filter 'BetterPickupRange*.jar' |
+        Where-Object { $_.Name -ne $jarName -and $_.Name -match '^BetterPickupRange(?:-\d+\.\d+\.\d+)?\.jar$' } |
+        ForEach-Object { Remove-Item -LiteralPath $_.FullName }
     Write-Output $installed
 } finally {
     $resolved = (Resolve-Path -LiteralPath $classes).Path

@@ -1,13 +1,14 @@
 $C = "../Common.ui";
+@AdminPanelHeight = 257;
 
 Group {
   LayoutMode: Top;
   Group { FlexWeight: 1; }
-  Group {
+  Group #RangeScreen {
     LayoutMode: Center;
-    Anchor: (Height: 230, Bottom: 24);
-    $C.@Panel {
-      Anchor: (Width: 422, Height: 230);
+    Anchor: (Height: @AdminPanelHeight, Bottom: 24);
+    $C.@Panel #RangePanel {
+      Anchor: (Width: 422, Height: @AdminPanelHeight);
       LayoutMode: Top;
       Padding: (Full: 15);
       Label #Heading {
@@ -38,7 +39,12 @@ Group {
       }
       $C.@SmallSecondaryTextButton #KeepPreview {
         Anchor: (Height: 28, Bottom: 6);
-        Text: "Preview outside panel: on";
+        Text: "Preview outside panel: off";
+      }
+      $C.@SmallSecondaryTextButton #PermissionsButton {
+        Visible: false;
+        Anchor: (Height: 28, Bottom: 6);
+        Text: "Player Permissions";
       }
       Group {
         LayoutMode: Left;
@@ -46,6 +52,63 @@ Group {
         $C.@SmallSecondaryTextButton #Reset { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Default"; }
         $C.@SmallSecondaryTextButton #Cancel { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Cancel"; }
         $C.@TextButton #Apply { FlexWeight: 1; Anchor: (Height: 32); Text: "Apply"; }
+      }
+    }
+  }
+
+  Group #PermissionsScreen {
+    Visible: false;
+    LayoutMode: Center;
+    Anchor: (Height: @AdminPanelHeight, Bottom: 24);
+    $C.@Panel {
+      Anchor: (Width: 422, Height: @AdminPanelHeight);
+      LayoutMode: Top;
+      Padding: (Full: 15);
+      Label #PermissionsHeading {
+        Text: "PLAYER PERMISSIONS";
+        Anchor: (Height: 23, Bottom: 6);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e7edf6, HorizontalAlignment: Center);
+      }
+      Group #PermissionsOptions {
+        LayoutMode: Top;
+        Anchor: (Height: 96, Bottom: 6);
+        Group {
+          LayoutMode: Left;
+          Anchor: (Height: 28);
+          $C.@CheckBox #Individual { Anchor: (Width: 22, Height: 22, Right: 8); }
+          Label #IndividualLabel {
+            Text: "Each player sets their own range";
+            Style: (FontSize: 14, TextColor: #e7edf6, VerticalAlignment: Center);
+            FlexWeight: 1;
+          }
+        }
+        Label #AccessLabel {
+          Text: "Command Access";
+          Anchor: (Height: 22, Top: 8, Bottom: 6);
+          Style: (FontSize: 14, TextColor: #e7edf6, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Group {
+          LayoutMode: Left;
+          Anchor: (Height: 32);
+          $C.@SmallSecondaryTextButton #AllPlayers {
+            FlexWeight: 1;
+            Anchor: (Height: 32, Right: 5);
+            Text: "All Players";
+            Disabled: true;
+          }
+          $C.@SmallSecondaryTextButton #AdminsOnly {
+            FlexWeight: 1;
+            Anchor: (Height: 32, Left: 5);
+            Text: "Admins Only";
+          }
+        }
+      }
+      Group { FlexWeight: 1; }
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 34);
+        $C.@SmallSecondaryTextButton #Back { FlexWeight: 1; Anchor: (Height: 32, Right: 6); Text: "Back"; }
+        $C.@TextButton #ApplyPermissions { FlexWeight: 1; Anchor: (Height: 32); Text: "Apply"; }
       }
     }
   }

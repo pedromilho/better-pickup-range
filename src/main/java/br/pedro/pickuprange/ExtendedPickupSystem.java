@@ -68,7 +68,7 @@ final class ExtendedPickupSystem extends DelayedEntitySystem<EntityStore> {
         var player = chunk.getComponent(index, Player.getComponentType());
         var identity = chunk.getComponent(index, PlayerRef.getComponentType());
         var position = chunk.getComponent(index, TransformComponent.getComponentType()).getPosition();
-        int steps = ranges.get(identity.getUuid());
+        int steps = ranges.effectiveSteps(identity.getUuid());
         var world = store.getExternalData().getWorld();
         var preview = previews.get(identity);
         if (preview != null) {

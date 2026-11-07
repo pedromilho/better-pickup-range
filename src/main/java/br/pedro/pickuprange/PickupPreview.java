@@ -19,7 +19,7 @@ final class PickupPreview {
     private static final long PREVIEW_REFRESH_NANOS = TimeUnit.SECONDS.toNanos(9);
 
     private final PlayerRef playerRef;
-    boolean keepVisible = true;
+    boolean keepVisible;
     private Vector3d previewCenter;
     private float previewRadius;
     private long previewStarted;
