@@ -4,6 +4,6 @@ A Hytale mod that lets you adjust your item pickup radius with a live third-pers
 
 ## Install and use
 
-1. Download the mod JAR from the [latest release](https://github.com/pedromilho/better-pickup-range/releases/latest). Requires Hytale 0.7.6.
+1. Download the mod JAR from the [latest release](https://github.com/pedromilho/better-pickup-range/releases/latest). Requires Hytale 0.7.7.
 2. Put the file in your Hytale `Mods` folder and enable the mod for your world.
 3. Run `/pickuprange`, adjust the radius, and select **Apply**.
