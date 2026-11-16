@@ -2,11 +2,13 @@ package br.pedro.pickuprange;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Constants;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
+import com.hypixel.hytale.server.core.modules.singleplayer.SingleplayerModule;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -17,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class PickupRangePlugin extends JavaPlugin {
     static boolean isAdmin(PlayerRef player) {
-        return PermissionsModule.get().getGroupsForUser(player.getUuid()).contains("hytale:Admin")
+        return (Constants.SINGLEPLAYER && SingleplayerModule.isOwner(player))
+            || PermissionsModule.get().getGroupsForUser(player.getUuid()).contains("hytale:Admin")
             || player.hasPermission("pickuprange.admin");
     }
 
